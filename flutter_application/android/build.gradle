@@ -1,18 +1,24 @@
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 }
 
 rootProject.buildDir = "../build"
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(":app")
+  project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
+}
+
+plugins {
+  // ... (your other plugins)
+
+  // Add the dependency for the Google services Gradle plugin
+  id("com.google.gms.google-services") version "[latest version]" apply false
+  // Include the app module as a dependency
+  includeBuild("../app")
 }
